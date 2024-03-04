@@ -1,4 +1,4 @@
-package org.example.pulmapeli;
+package org.example.sokoban;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

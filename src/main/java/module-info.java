@@ -1,9 +1,9 @@
-module org.example.pulmapeli {
+module org.example.sokoban {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
 
 
-    opens org.example.pulmapeli to javafx.fxml;
-    exports org.example.pulmapeli;
+    opens org.example.sokoban to javafx.fxml;
+    exports org.example.sokoban;
 }

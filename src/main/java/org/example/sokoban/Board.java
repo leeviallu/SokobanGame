@@ -1,4 +1,4 @@
-package org.example.pulmapeli;
+package org.example.sokoban;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
