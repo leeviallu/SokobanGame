@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -14,8 +13,8 @@ public class Board extends Application {
     private int positionX = 2;
     private final int rows = 10;
     private final int colums = 10;
-    Circle ympyra = new Circle(25,Color.YELLOW);
-    Rectangle laatikko = new Rectangle(50,50, Color.BLACK);
+    Character hahmo = new Character();
+    Box laatikko = new Box();
     GridPane paneeli = initBoard();
 
     public GridPane initBoard() {
@@ -49,7 +48,7 @@ public class Board extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        paneeli.add(ympyra, positionX, positionY);
+        paneeli.add(hahmo, positionX, positionY);
         paneeli.add(laatikko, 5,5);
 
 
@@ -57,20 +56,20 @@ public class Board extends Application {
         kehys.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.LEFT && 0 < positionX) {
                 positionX--;
-                paneeli.getChildren().remove(ympyra);
-                paneeli.add(ympyra,positionX,positionY);
+                paneeli.getChildren().remove(hahmo);
+                paneeli.add(hahmo,positionX,positionY);
             } else if (e.getCode() == KeyCode.RIGHT && positionX < (colums - 1)) {
                 positionX++;
-                paneeli.getChildren().remove(ympyra);
-                paneeli.add(ympyra,positionX,positionY);
+                paneeli.getChildren().remove(hahmo);
+                paneeli.add(hahmo,positionX,positionY);
             } else if (e.getCode() == KeyCode.UP && 0 < positionY) {
                 positionY--;
-                paneeli.getChildren().remove(ympyra);
-                paneeli.add(ympyra,positionX,positionY);
+                paneeli.getChildren().remove(hahmo);
+                paneeli.add(hahmo,positionX,positionY);
             } else if (e.getCode() == KeyCode.DOWN && positionY < (rows - 1)) {
                 positionY++;
-                paneeli.getChildren().remove(ympyra);
-                paneeli.add(ympyra,positionX,positionY);
+                paneeli.getChildren().remove(hahmo);
+                paneeli.add(hahmo,positionX,positionY);
             }
         });
 
