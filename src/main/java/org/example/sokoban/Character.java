@@ -4,8 +4,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class Character extends Circle {
-    private int posX = 2;
-    private int posY = 1;
+    private int posX;
+    private int posY;
     Color color = Color.YELLOW;
 
     public Character() {
