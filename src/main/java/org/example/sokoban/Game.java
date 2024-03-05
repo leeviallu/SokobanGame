@@ -7,40 +7,31 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class Game extends Application {
-    private int positionY = 1;
-    private int positionX = 2;
     private final int rows = 10;
     private final int columns = 10;
     Character hahmo = new Character();
     Box laatikko = new Box();
     GridPane paneeli = new Board(rows, columns);
 
-
     @Override
     public void start(Stage primaryStage) {
-        paneeli.add(hahmo, positionX, positionY);
+        paneeli.add(hahmo, hahmo.getPosX(), hahmo.getPosY());
         paneeli.add(laatikko, 5,5);
 
 
         Scene kehys = new Scene(paneeli, 500, 500);
         kehys.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.LEFT && 0 < positionX) {
-                positionX--;
-                paneeli.getChildren().remove(hahmo);
-                paneeli.add(hahmo,positionX,positionY);
-            } else if (e.getCode() == KeyCode.RIGHT && positionX < (columns - 1)) {
-                positionX++;
-                paneeli.getChildren().remove(hahmo);
-                paneeli.add(hahmo,positionX,positionY);
-            } else if (e.getCode() == KeyCode.UP && 0 < positionY) {
-                positionY--;
-                paneeli.getChildren().remove(hahmo);
-                paneeli.add(hahmo,positionX,positionY);
-            } else if (e.getCode() == KeyCode.DOWN && positionY < (rows - 1)) {
-                positionY++;
-                paneeli.getChildren().remove(hahmo);
-                paneeli.add(hahmo,positionX,positionY);
+            if (e.getCode() == KeyCode.LEFT && 0 < hahmo.getPosX()) {
+                hahmo.setPosX(hahmo.getPosX()-1);
+            } else if (e.getCode() == KeyCode.RIGHT && hahmo.getPosX() < (columns - 1)) {
+                hahmo.setPosX(hahmo.getPosX()+1);
+            } else if (e.getCode() == KeyCode.UP && 0 < hahmo.getPosY()) {
+                hahmo.setPosY(hahmo.getPosY()-1);
+            } else if (e.getCode() == KeyCode.DOWN && hahmo.getPosY() < (rows - 1)) {
+                hahmo.setPosY(hahmo.getPosY()+1);
             }
+            paneeli.getChildren().remove(hahmo);
+            paneeli.add(hahmo,hahmo.getPosX(),hahmo.getPosY());
         });
 
 
