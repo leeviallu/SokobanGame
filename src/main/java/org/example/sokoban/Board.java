@@ -2,46 +2,63 @@ package org.example.sokoban;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class Board extends GridPane {
-    private int rows = 10;
-    private int columns = 10;
+    private final int WALL = 1;
+    private final int FLOOR = 2;
+    private final int CHARACTER = 3;
+    private final int BOX = 4;
+    private final int TARGET = 5;
+    Dictionary<Pair<Integer, Integer>, Integer> dict = new Hashtable<>();
     Character hahmo = new Character();
-
 
     public Board() {
         initBoard();
     }
 
-    public Board(int rows, int columns) {
-        this.rows = rows;
-        this.columns = columns;
-        initBoard();
+    public Dictionary<Pair<Integer, Integer>, Integer> getDict() {
+        return dict;
+    }
+
+    public void setDict(Dictionary<Pair<Integer, Integer>, Integer> dict) {
+        this.dict = dict;
     }
 
     public void initBoard() {
-        String[] board = {"#######", "# @ # #", "#   $ #", "#   $ #", "# ..  #", "#  *  #", "#######"};
-        for (int i = 0; i < board.length; i++) {
-            char[] arr = board[i].toCharArray();
-            for (int j = 0; j < arr.length; j++) {
-                if (arr[j] == '#') {
-                    add(new Wall(), i, j);
-                    System.out.println("Seinä");
-                } else if (arr[j] == ' ') {
-                    add(new Floor(), i, j);
-                    System.out.println("Lattia");
-                } else if (arr[j] == '@') {
-                    hahmo.setPosX(i);
-                    hahmo.setPosY(j);
-                    add(hahmo, i, j);
-                    System.out.println("Hahmo");
-                } else if (arr[j] == '.') {
-                    add(new Box(), i, j);
-                    System.out.println("Laatikko");
-                } else if (arr[j] == '$') {
-                    System.out.println("Kohde");
+        String[] board = {
+                            "#######",
+                            "#@  # #",
+                            "#   $ #",
+                            "#   $ #",
+                            "# ..  #", 
+                            "#  *  #",
+                            "#######"
+                         };
+        for (int row = 0; row < board.length; row++) {
+            char[] arr = board[row].toCharArray();
+            for (int col = 0; col < arr.length; col++) {
+                if (arr[col] == '#') {
+                    dict.put(new Pair<>(col, row), WALL);
+                    add(new Wall(), col, row);
+                } else if (arr[col] == ' ') {
+                    dict.put(new Pair<>(col, row), FLOOR);
+                    add(new Floor(), col, row);
+                } else if (arr[col] == '@') {
+                    dict.put(new Pair<>(col, row), CHARACTER);
+                    hahmo.setPosX(col);
+                    hahmo.setPosY(row);
+                    add(hahmo, col, row);
+                } else if (arr[col] == '.') {
+                    dict.put(new Pair<>(col, row), BOX);
+                    add(new Box(), col, row);
+                } else if (arr[col] == '$') {
+                    dict.put(new Pair<>(col, row), TARGET);
+                    add(new Box(Color.GREEN), col, row);
                 }
-                System.out.println(i + " " + j);
             }
         }
     }
