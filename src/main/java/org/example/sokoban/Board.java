@@ -2,6 +2,7 @@ package org.example.sokoban;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
 import java.util.Dictionary;
@@ -57,7 +58,7 @@ public class Board extends GridPane {
                     add(new Box(), col, row);
                 } else if (arr[col] == '$') {
                     dict.put(new Pair<>(col, row), TARGET);
-                    add(new Box(Color.GREEN), col, row);
+                    add(new Target(), col, row);
                 }
             }
         }

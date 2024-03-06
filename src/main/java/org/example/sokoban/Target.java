@@ -3,15 +3,15 @@ package org.example.sokoban;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Box extends Rectangle {
+public class Target extends Rectangle {
     private int posX;
     private int posY;
-    private Color color = Color.BURLYWOOD;
+    private Color color = Color.LIGHTPINK;
 
-    public Box() {
+    public Target() {
         initBox();
     }
-    public Box(Color color) {
+    public Target(Color color) {
         this.color = color;
         initBox();
     }
