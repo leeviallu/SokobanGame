@@ -28,7 +28,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Scene kehys = new Scene(paneeli, 500, 500);
+        Scene kehys = new Scene(paneeli, 1200, 650);
         kehys.setOnKeyPressed(e -> {
 
             paneeli.getDict().put(new Pair<>(hahmo.getPosX(),hahmo.getPosY()), 2);

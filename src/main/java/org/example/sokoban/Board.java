@@ -1,10 +1,7 @@
 package org.example.sokoban;
 
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
-
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -31,18 +28,24 @@ public class Board extends GridPane {
 
     public void initBoard() {
         String[] board = {
-                            "#######",
-                            "#@  # #",
-                            "#   $ #",
-                            "#   $ #",
-                            "# ..  #", 
-                            "#  *  #",
-                            "#######"
+                            "              XXXXXXXX",
+                            "              X  ....X",
+                            "   XXXXXXXXXXXX  ....X",
+                            "   X    X  * *   ....X",
+                            "   X ***X*  * X  ....X",
+                            "   X  *     * X  ....X",
+                            "   X ** X* * *XXXXXXXX",
+                            "XXXX  * X     X       ",
+                            "X   X XXXXXXXXX       ",
+                            "X    *  XX            ",
+                            "X **X** @X            ",
+                            "X   X   XX            ",
+                            "XXXXXXXXX             "
                          };
         for (int row = 0; row < board.length; row++) {
             char[] arr = board[row].toCharArray();
             for (int col = 0; col < arr.length; col++) {
-                if (arr[col] == '#') {
+                if (arr[col] == 'X') {
                     dict.put(new Pair<>(col, row), WALL);
                     add(new Wall(), col, row);
                 } else if (arr[col] == ' ') {
@@ -53,10 +56,10 @@ public class Board extends GridPane {
                     hahmo.setPosX(col);
                     hahmo.setPosY(row);
                     add(hahmo, col, row);
-                } else if (arr[col] == '.') {
+                } else if (arr[col] == '*') {
                     dict.put(new Pair<>(col, row), BOX);
                     add(new Box(), col, row);
-                } else if (arr[col] == '$') {
+                } else if (arr[col] == '.') {
                     dict.put(new Pair<>(col, row), TARGET);
                     add(new Target(), col, row);
                 }
