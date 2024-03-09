@@ -24,19 +24,13 @@ public class Board extends GridPane {
         this.mutableDict = dict;
     }
     String[] board = {
-            "              XXXXXXXX",
-            "              X  ....X",
-            "   XXXXXXXXXXXX  ....X",
-            "   X    X  * *   ....X",
-            "   X ***X*  * X  ....X",
-            "   X  *     * X  ....X",
-            "   X ** X* * *XXXXXXXX",
-            "XXXX  * X     X       ",
-            "X   X XXXXXXXXX       ",
-            "X    *  XX            ",
-            "X **X** @X            ",
-            "X   X   XX            ",
-            "XXXXXXXXX             "
+            "XXXXXXX",
+            "X@  X X",
+            "X   * X",
+            "X   * X",
+            "X ..  X",
+            "X     X",
+            "XXXXXXX"
     };
 
     public Board() {
@@ -73,6 +67,20 @@ public class Board extends GridPane {
         updateBoard();
     }
 
+    public boolean isReady() {
+        for (int row = 0; row < board.length; row++) {
+            char[] arr = board[row].toCharArray();
+            for (int col = 0; col < arr.length; col++) {
+                if (mutableDict.get(new Pair<>(col, row)) == BOX) {
+                    if (!(layoutDict.get(new Pair<>(col, row)) == TARGET)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public void updateBoard() {
         getChildren().removeAll();
         for (int row = 0; row < board.length; row++) {
@@ -99,5 +107,6 @@ public class Board extends GridPane {
                 }
             }
         }
+        System.out.println(isReady());
     }
 }
