@@ -1,6 +1,5 @@
 package org.example.sokoban;
 
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import java.util.Dictionary;
@@ -108,10 +107,6 @@ public class Layout {
                     gridpane.add(new Box(), col, row);
                 }
             }
-        }
-
-        if (isReady()) {
-            gridpane.add(new Label("Voitit pelin!"), 0,board.length);
         }
     }
     public boolean isReady() {
