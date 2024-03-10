@@ -1,5 +1,6 @@
 package org.example.sokoban;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import java.util.Dictionary;
@@ -24,24 +25,31 @@ public class Board extends GridPane {
         this.mutableDict = dict;
     }
     String[] board = {
-            "XXXXXXX",
-            "X@  X X",
-            "X   * X",
-            "X   * X",
-            "X ..  X",
-            "X     X",
-            "XXXXXXX"
+              " #####  ",
+              " #   ## ",
+              "## * .##",
+              "# $$*  #",
+              "#  * . #",
+              "## @ ###",
+              " #####  "
     };
 
     public Board() {
+        char wallChar = '#';
+        char floorChar = ' ';
+        char characterChar = '@';
+        char boxChar = '$';
+        char targetChar = '.';
+        char boxOnTargetChar = '*';
+
         for (int row = 0; row < board.length; row++) {
             char[] arr = board[row].toCharArray();
             for (int col = 0; col < arr.length; col++) {
-                if (arr[col] == 'X') {
+                if (arr[col] == wallChar) {
                     layoutDict.put(new Pair<>(col, row), WALL);
-                } else if (arr[col] == ' ' || arr[col] == '@' || arr[col] == '*') {
+                } else if (arr[col] == floorChar || arr[col] == characterChar || arr[col] == boxChar) {
                     layoutDict.put(new Pair<>(col, row), FLOOR);
-                } else if (arr[col] == '.') {
+                } else if (arr[col] == targetChar || arr[col] == boxOnTargetChar) {
                     layoutDict.put(new Pair<>(col, row), TARGET);
                 }
             }
@@ -50,15 +58,15 @@ public class Board extends GridPane {
         for (int row = 0; row < board.length; row++) {
             char[] arr = board[row].toCharArray();
             for (int col = 0; col < arr.length; col++) {
-                if (arr[col] == 'X') {
+                if (arr[col] == wallChar) {
                     mutableDict.put(new Pair<>(col, row), WALL);
-                } else if (arr[col] == ' ') {
+                } else if (arr[col] == floorChar) {
                     mutableDict.put(new Pair<>(col, row), FLOOR);
-                } else if (arr[col] == '@') {
+                } else if (arr[col] == characterChar) {
                     mutableDict.put(new Pair<>(col, row), CHARACTER);
-                } else if (arr[col] == '*') {
+                } else if (arr[col] == boxChar || arr[col] == boxOnTargetChar) {
                     mutableDict.put(new Pair<>(col, row), BOX);
-                } else if (arr[col] == '.') {
+                } else if (arr[col] == targetChar) {
                     mutableDict.put(new Pair<>(col, row), TARGET);
                 }
             }
@@ -107,6 +115,10 @@ public class Board extends GridPane {
                 }
             }
         }
-        System.out.println(isReady());
+
+        if (isReady()) {
+            add(new Label("Voitit pelin!"), 0,board.length);
+        }
+
     }
 }
