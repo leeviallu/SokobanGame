@@ -6,35 +6,43 @@ import javafx.util.Pair;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class Board extends GridPane {
+public class Layout {
     private final int WALL = 1;
     private final int FLOOR = 2;
     private final int CHARACTER = 3;
     private final int BOX = 4;
     private final int TARGET = 5;
-    Dictionary<Pair<Integer, Integer>, Integer> mutableDict = new Hashtable<>();
-    Dictionary<Pair<Integer, Integer>, Integer> layoutDict = new Hashtable<>();
-
-    Character hahmo = new Character();
-
+    private Dictionary<Pair<Integer, Integer>, Integer> mutableDict = new Hashtable<>();
+    private final Dictionary<Pair<Integer, Integer>, Integer> layoutDict = new Hashtable<>();
+    private GridPane gridpane = new GridPane();
+    private Character character = new Character();
+    private final String[] board = {
+              "#######",
+              "#. # .#",
+              "# $@$ #",
+              "#  #  #",
+              "#######"
+    };
     public Dictionary<Pair<Integer, Integer>, Integer> getDict() {
         return mutableDict;
     }
-
     public void setDict(Dictionary<Pair<Integer, Integer>, Integer> dict) {
         this.mutableDict = dict;
     }
-    String[] board = {
-              " #####  ",
-              " #   ## ",
-              "## * .##",
-              "# $$*  #",
-              "#  * . #",
-              "## @ ###",
-              " #####  "
-    };
+    public Character getCharacter() {
+        return character;
+    }
+    public void setCharacter(Character character) {
+        this.character = character;
+    }
+    public GridPane getBoard() {
+        return gridpane;
+    }
+    public void setBoard(GridPane gridpane) {
+        this.gridpane = gridpane;
+    }
 
-    public Board() {
+    public Layout() {
         char wallChar = '#';
         char floorChar = ' ';
         char characterChar = '@';
@@ -72,9 +80,40 @@ public class Board extends GridPane {
             }
         }
 
-        updateBoard();
+        initBoard();
     }
 
+    public void initBoard() {
+        gridpane.getChildren().clear();
+        for (int row = 0; row < board.length; row++) {
+            char[] arr = board[row].toCharArray();
+            for (int col = 0; col < arr.length; col++) {
+                if (layoutDict.get(new Pair<>(col, row)) == WALL) {
+                    gridpane.add(new Wall(), col, row);
+                } else if (layoutDict.get(new Pair<>(col, row)) == FLOOR) {
+                    gridpane.add(new Floor(), col, row);
+                } else if (layoutDict.get(new Pair<>(col, row)) == TARGET) {
+                    gridpane.add(new Target(), col, row);
+                }
+            }
+        }
+        for (int row = 0; row < board.length; row++) {
+            char[] arr = board[row].toCharArray();
+            for (int col = 0; col < arr.length; col++) {
+                if (mutableDict.get(new Pair<>(col, row)) == CHARACTER) {
+                    gridpane.add(character, col, row);
+                    character.setPosX(col);
+                    character.setPosY(row);
+                } else if (mutableDict.get(new Pair<>(col, row)) == BOX) {
+                    gridpane.add(new Box(), col, row);
+                }
+            }
+        }
+
+        if (isReady()) {
+            gridpane.add(new Label("Voitit pelin!"), 0,board.length);
+        }
+    }
     public boolean isReady() {
         for (int row = 0; row < board.length; row++) {
             char[] arr = board[row].toCharArray();
@@ -87,38 +126,5 @@ public class Board extends GridPane {
             }
         }
         return true;
-    }
-
-    public void updateBoard() {
-        getChildren().removeAll();
-        for (int row = 0; row < board.length; row++) {
-            char[] arr = board[row].toCharArray();
-            for (int col = 0; col < arr.length; col++) {
-                if (layoutDict.get(new Pair<>(col, row)) == WALL) {
-                    add(new Wall(), col, row);
-                } else if (layoutDict.get(new Pair<>(col, row)) == FLOOR) {
-                    add(new Floor(), col, row);
-                } else if (layoutDict.get(new Pair<>(col, row)) == TARGET) {
-                    add(new Target(), col, row);
-                }
-            }
-        }
-        for (int row = 0; row < board.length; row++) {
-            char[] arr = board[row].toCharArray();
-            for (int col = 0; col < arr.length; col++) {
-                if (mutableDict.get(new Pair<>(col, row)) == CHARACTER) {
-                    add(hahmo, col, row);
-                    hahmo.setPosX(col);
-                    hahmo.setPosY(row);
-                } else if (mutableDict.get(new Pair<>(col, row)) == BOX) {
-                    add(new Box(), col, row);
-                }
-            }
-        }
-
-        if (isReady()) {
-            add(new Label("Voitit pelin!"), 0,board.length);
-        }
-
     }
 }
