@@ -64,7 +64,7 @@ public class Game extends Application {
                     charPosY = hahmo.getPosY();
                 }
             } else if (e.getCode() == KeyCode.DOWN && !isWall(charPosX,charPosY+1)) {
-                if (isBox(charPosX,charPosY+1) && !isWall(charPosX,charPosY+2) && !isBox(charPosX+2,charPosY)) {
+                if (isBox(charPosX,charPosY+1) && !isWall(charPosX,charPosY+2) && !isBox(charPosX,charPosY+2)) {
                     paneeli.getDict().put(new Pair<>(charPosX,charPosY+2), DICTBOX);
                     hahmo.setPosY(charPosY+1);
                     charPosY = hahmo.getPosY();
