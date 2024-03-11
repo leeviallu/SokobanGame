@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 public class Game extends Application {
-    private final int DICTFLOOR = 2;
+    private final int DICTCLEAR = 0;
+    private final int DICTWALL = 1;
+    private final int DICTCHARACTER = 3;
     private final int DICTBOX = 4;
     private final Layout layout = new Layout();
     private final GridPane gridPane = layout.getBoard();
@@ -22,7 +24,6 @@ public class Game extends Application {
 
     public boolean notWall(int x, int y) {
         Integer value = layout.getDict().get(new Pair<>(x,y));
-        int DICTWALL = 1;
         return value == null || value != DICTWALL;
     }
     public boolean isBox(int x, int y) {
@@ -77,7 +78,7 @@ public class Game extends Application {
             if (running) {
                 charPosX = character.getPosX();
                 charPosY = character.getPosY();
-                layout.getDict().put(new Pair<>(charPosX, charPosY), DICTFLOOR);
+                layout.getDict().put(new Pair<>(charPosX, charPosY), DICTCLEAR);
                 if (e.getCode() == KeyCode.LEFT && notWall(charPosX - 1, charPosY)) {
                     moveLeft();
                 } else if (e.getCode() == KeyCode.RIGHT && notWall(charPosX + 1, charPosY)) {
@@ -87,7 +88,7 @@ public class Game extends Application {
                 } else if (e.getCode() == KeyCode.DOWN && notWall(charPosX, charPosY + 1)) {
                     moveDown();
                 }
-                layout.getDict().put(new Pair<>(charPosX, charPosY), 3);
+                layout.getDict().put(new Pair<>(charPosX, charPosY), DICTCHARACTER);
                 layout.initBoard();
                 if (layout.isReady()) {
                     running = false;
