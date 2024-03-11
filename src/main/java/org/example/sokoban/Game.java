@@ -14,7 +14,7 @@ public class Game extends Application {
     private final int DICTBOX = 4;
     private final Layout layout = new Layout();
     private final GridPane gridPane = layout.getBoard();
-    private final Character hahmo = layout.getCharacter();
+    private final Character character = layout.getCharacter();
     private final VBox vBox = new VBox(gridPane);
     private boolean running = true;
     private int charPosX;
@@ -32,41 +32,41 @@ public class Game extends Application {
     public void moveLeft() {
         if (isBox(charPosX - 1, charPosY) && notWall(charPosX - 2, charPosY) && !isBox(charPosX - 2, charPosY)) {
             layout.getDict().put(new Pair<>(charPosX - 2, charPosY), DICTBOX);
-            hahmo.setPosX(charPosX - 1);
-            charPosX = hahmo.getPosX();
+            character.setPosX(charPosX - 1);
+            charPosX = character.getPosX();
         } else if (!isBox(charPosX - 1, charPosY)) {
-            hahmo.setPosX(charPosX - 1);
-            charPosX = hahmo.getPosX();
+            character.setPosX(charPosX - 1);
+            charPosX = character.getPosX();
         }
     }
     public void moveRight() {
         if (isBox(charPosX + 1, charPosY) && notWall(charPosX + 2, charPosY) && !isBox(charPosX + 2, charPosY)) {
             layout.getDict().put(new Pair<>(charPosX + 2, charPosY), DICTBOX);
-            hahmo.setPosX(charPosX + 1);
-            charPosX = hahmo.getPosX();
+            character.setPosX(charPosX + 1);
+            charPosX = character.getPosX();
         } else if (!isBox(charPosX + 1, charPosY)) {
-            hahmo.setPosX(charPosX + 1);
-            charPosX = hahmo.getPosX();
+            character.setPosX(charPosX + 1);
+            charPosX = character.getPosX();
         }
     }
     public void moveUp() {
         if (isBox(charPosX, charPosY - 1) && notWall(charPosX, charPosY - 2) && !isBox(charPosX, charPosY - 2)) {
             layout.getDict().put(new Pair<>(charPosX, charPosY - 2), DICTBOX);
-            hahmo.setPosY(charPosY - 1);
-            charPosY = hahmo.getPosY();
+            character.setPosY(charPosY - 1);
+            charPosY = character.getPosY();
         } else if (!isBox(charPosX, charPosY - 1)) {
-            hahmo.setPosY(charPosY - 1);
-            charPosY = hahmo.getPosY();
+            character.setPosY(charPosY - 1);
+            charPosY = character.getPosY();
         }
     }
     public void moveDown() {
         if (isBox(charPosX, charPosY + 1) && notWall(charPosX, charPosY + 2) && !isBox(charPosX, charPosY + 2)) {
             layout.getDict().put(new Pair<>(charPosX, charPosY + 2), DICTBOX);
-            hahmo.setPosY(charPosY + 1);
-            charPosY = hahmo.getPosY();
+            character.setPosY(charPosY + 1);
+            charPosY = character.getPosY();
         } else if (!isBox(charPosX, charPosY + 1)) {
-            hahmo.setPosY(charPosY + 1);
-            charPosY = hahmo.getPosY();
+            character.setPosY(charPosY + 1);
+            charPosY = character.getPosY();
         }
     }
 
@@ -75,8 +75,8 @@ public class Game extends Application {
         Scene kehys = new Scene(vBox, 1200, 650);
         kehys.setOnKeyPressed(e -> {
             if (running) {
-                charPosX = hahmo.getPosX();
-                charPosY = hahmo.getPosY();
+                charPosX = character.getPosX();
+                charPosY = character.getPosY();
                 layout.getDict().put(new Pair<>(charPosX, charPosY), DICTFLOOR);
                 if (e.getCode() == KeyCode.LEFT && notWall(charPosX - 1, charPosY)) {
                     moveLeft();
