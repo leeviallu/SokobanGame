@@ -18,9 +18,10 @@ public class Game extends Application {
     private Layout layout;
     private GridPane gridPane;
     private Character character;
+    private int levelTime;
     private int currentLevel;
     private Level[] levelList;
-    private final Levels levels = new Levels();
+    private Levels levels = new Levels();
     private final VBox vBox = new VBox();
     private final HBox btnBox = new HBox();
     private final Button restartBtn = new Button("Restart");
@@ -107,6 +108,16 @@ public class Game extends Application {
                 layout.getDict().put(new Pair<>(charPosX, charPosY), DICTCHARACTER);
                 layout.initBoard();
                 if (layout.isReady()) {
+                    for (Level i : levelList) {
+                        if (i.getLevelNumber() == currentLevel + 1) {
+                            if (levelTime < i.getRecordTime()) {
+                                i.setRecordTime(levelTime);
+                            }
+                        }
+                    }
+                    levelTime = 0;
+                    levels.writeFile();
+                    levels = new Levels();
                     running = false;
                     vBox.getChildren().add(new Label("Voitit pelin!"));
                 }
@@ -117,6 +128,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        levels.printFileContent();
         levels.writeFile();
         levels.readFile();
         levelList = levels.getLevels();

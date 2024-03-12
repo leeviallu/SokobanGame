@@ -114,8 +114,7 @@ public class Levels {
         }
     }
 
-    public void handleFile() {
-        writeFile();
+    public void printFileContent() {
         readFile();
         for (Level lvl : levels) {
             System.out.println(lvl.getLevelNumber());
