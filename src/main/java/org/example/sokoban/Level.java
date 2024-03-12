@@ -11,7 +11,7 @@ public class Level implements Serializable {
     public Level(String[] level, int levelNumber) {
         this.level = level;
         this.levelNumber = levelNumber;
-        this.recordTime = 999999999;
+        this.recordTime = Double.POSITIVE_INFINITY;
     }
     public String[] getLevel() {
         return level;

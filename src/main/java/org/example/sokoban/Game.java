@@ -91,7 +91,11 @@ public class Game extends Application {
         gridPane = layout.getBoard();
         character = layout.getCharacter();
         levelNumberLbl.setText("Taso: " + levels.getLevels()[currentLevel - 1].getLevelNumber());
-        highscoreLbl.setText("Huippuaika: " + levels.getLevels()[currentLevel -1].getRecordTime());
+        if (levels.getLevels()[currentLevel - 1].getRecordTime() == Double.POSITIVE_INFINITY) {
+            highscoreLbl.setText("Kenttää ei ole vielä läpäisty");
+        } else {
+            highscoreLbl.setText("Huippuaika: " + levels.getLevels()[currentLevel -1].getRecordTime());
+        }
         vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         startTime = System.nanoTime();
     }
@@ -148,7 +152,12 @@ public class Game extends Application {
 
         running = true;
         levelNumberLbl.setText("Taso: " + levels.getLevels()[0].getLevelNumber());
-        highscoreLbl.setText("Huippuaika: " + levels.getLevels()[0].getRecordTime());
+        if (levels.getLevels()[0].getRecordTime() == Double.POSITIVE_INFINITY) {
+            highscoreLbl.setText("Kenttää ei ole vielä läpäisty");
+        } else {
+            highscoreLbl.setText("Huippuaika: " + levels.getLevels()[0].getRecordTime());
+        }
+
 
         infoBox.setPadding(new Insets(10));
         infoBox.setSpacing(40);
