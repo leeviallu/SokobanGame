@@ -144,7 +144,7 @@ public class Game extends Application {
         prevBtn.setFocusTraversable(false);
 
         Scene scene = getScene();
-        primaryStage.setTitle("Kenttä 1");
+        primaryStage.setTitle("Sokoban");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
