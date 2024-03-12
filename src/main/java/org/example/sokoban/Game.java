@@ -18,7 +18,7 @@ public class Game extends Application {
     private Layout layout;
     private GridPane gridPane;
     private Character character;
-    private int levelTime;
+    private long startTime;
     private int currentLevel;
     private Level[] levelList;
     private Levels levels = new Levels();
@@ -87,6 +87,7 @@ public class Game extends Application {
         gridPane = layout.getBoard();
         character = layout.getCharacter();
         vBox.getChildren().addAll(gridPane, btnBox);
+        startTime = System.nanoTime();
     }
 
     private Scene getScene() {
@@ -108,6 +109,7 @@ public class Game extends Application {
                 layout.getDict().put(new Pair<>(charPosX, charPosY), DICTCHARACTER);
                 layout.initBoard();
                 if (layout.isReady()) {
+                    double levelTime = (double) (System.nanoTime() - startTime)/1_000_000_000;
                     for (Level i : levelList) {
                         if (i.getLevelNumber() == currentLevel + 1) {
                             if (levelTime < i.getRecordTime()) {
@@ -115,7 +117,6 @@ public class Game extends Application {
                             }
                         }
                     }
-                    levelTime = 0;
                     levels.writeFile();
                     levels = new Levels();
                     running = false;
@@ -162,7 +163,7 @@ public class Game extends Application {
             }
         });
         prevBtn.setFocusTraversable(false);
-
+        startTime = System.nanoTime();
         Scene scene = getScene();
         primaryStage.setTitle("Sokoban");
         primaryStage.setScene(scene);

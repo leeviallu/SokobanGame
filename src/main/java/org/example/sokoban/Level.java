@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Level implements Serializable {
     private String[] level;
     private int levelNumber;
-    private int recordTime;
+    private double recordTime;
 
     public Level() {}
     public Level(String[] level, int levelNumber) {
@@ -25,10 +25,10 @@ public class Level implements Serializable {
     public void setLevelNumber(int levelNumber) {
         this.levelNumber = levelNumber;
     }
-    public int getRecordTime() {
+    public double getRecordTime() {
         return recordTime;
     }
-    public void setRecordTime(int recordTime) {
+    public void setRecordTime(double recordTime) {
         this.recordTime = recordTime;
     }
 }
