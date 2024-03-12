@@ -124,25 +124,22 @@ public class Game extends Application {
         restartBtn.setOnAction(e -> {
             restartLevel(currentLevel);
             layout.initBoard();
-
         });
         restartBtn.setFocusTraversable(false);
         nextBtn.setOnAction(e -> {
             if (layout.levels.length > currentLevel + 1) {
                 currentLevel ++;
+                restartLevel(currentLevel);
+                layout.initBoard();
             }
-            restartLevel(currentLevel);
-            layout.initBoard();
         });
         nextBtn.setFocusTraversable(false);
         prevBtn.setOnAction(e -> {
             if (currentLevel != 0) {
                 currentLevel --;
-
+                restartLevel(currentLevel);
+                layout.initBoard();
             }
-            restartLevel(currentLevel);
-            layout.initBoard();
-
         });
         prevBtn.setFocusTraversable(false);
 
