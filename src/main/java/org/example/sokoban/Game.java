@@ -1,6 +1,7 @@
 package org.example.sokoban;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,14 +20,17 @@ public class Game extends Application {
     private GridPane gridPane;
     private Character character;
     private long startTime;
-    private int currentLevel;
+    private int currentLevel = 1;
     private Level[] levelList;
     private Levels levels = new Levels();
     private final VBox vBox = new VBox();
     private final HBox btnBox = new HBox();
+    private final HBox infoBox = new HBox();
     private final Button restartBtn = new Button("Restart");
     private final Button nextBtn = new Button("Next level");
     private final Button prevBtn = new Button("Previous level");
+    private final Label highscoreLbl = new Label("");
+    private final Label levelNumberLbl = new Label("");
     private boolean running;
     private int charPosX;
     private int charPosY;
@@ -86,7 +90,9 @@ public class Game extends Application {
         layout = new Layout(levelList, level);
         gridPane = layout.getBoard();
         character = layout.getCharacter();
-        vBox.getChildren().addAll(gridPane, btnBox);
+        levelNumberLbl.setText("Taso: " + levels.getLevels()[currentLevel - 1].getLevelNumber());
+        highscoreLbl.setText("Huippuaika: " + levels.getLevels()[currentLevel -1].getRecordTime());
+        vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         startTime = System.nanoTime();
     }
 
@@ -111,16 +117,19 @@ public class Game extends Application {
                 if (layout.isReady()) {
                     double levelTime = (double) (System.nanoTime() - startTime)/1_000_000_000;
                     for (Level i : levelList) {
-                        if (i.getLevelNumber() == currentLevel + 1) {
+                        if (i.getLevelNumber() == currentLevel) {
                             if (levelTime < i.getRecordTime()) {
                                 i.setRecordTime(levelTime);
+                                highscoreLbl.setText("Huippuaika: " + i.getRecordTime());
+                                levels.writeFile();
                             }
                         }
                     }
-                    levels.writeFile();
                     levels = new Levels();
                     running = false;
-                    vBox.getChildren().add(new Label("Voitit pelin!"));
+                    HBox completedPane = new HBox(new Label("Läpäisit tason!"));
+                    completedPane.setPadding(new Insets(10));
+                    vBox.getChildren().add(completedPane);
                 }
             }
         });
@@ -134,21 +143,26 @@ public class Game extends Application {
         levels.readFile();
         levelList = levels.getLevels();
 
-        layout = new Layout(levelList, 0);
+        layout = new Layout(levelList, 1);
         gridPane = layout.getBoard();
         character = layout.getCharacter();
 
         running = true;
-        currentLevel = 0;
+        levelNumberLbl.setText("Taso: " + levels.getLevels()[0].getLevelNumber());
+        highscoreLbl.setText("Huippuaika: " + levels.getLevels()[0].getRecordTime());
+
+        infoBox.setPadding(new Insets(10));
+        infoBox.setSpacing(40);
+        infoBox.getChildren().addAll(levelNumberLbl, highscoreLbl);
         btnBox.getChildren().addAll(prevBtn,restartBtn,nextBtn);
-        vBox.getChildren().addAll(gridPane, btnBox);
+        vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         restartBtn.setOnAction(e -> {
             restartLevel(currentLevel);
             layout.initBoard();
         });
         restartBtn.setFocusTraversable(false);
         nextBtn.setOnAction(e -> {
-            if (levelList.length > currentLevel + 1) {
+            if (levelList.length > currentLevel) {
                 currentLevel ++;
                 restartLevel(currentLevel);
                 layout.initBoard();
@@ -156,7 +170,7 @@ public class Game extends Application {
         });
         nextBtn.setFocusTraversable(false);
         prevBtn.setOnAction(e -> {
-            if (currentLevel != 0) {
+            if (currentLevel != 1) {
                 currentLevel --;
                 restartLevel(currentLevel);
                 layout.initBoard();

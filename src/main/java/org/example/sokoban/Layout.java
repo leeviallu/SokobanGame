@@ -37,6 +37,7 @@ public class Layout {
     }
 
     public Layout(Level[] levelList, int level) {
+        level --;
         board = levelList[level].getLevel();
 
         char wallChar = '#';
