@@ -126,10 +126,10 @@ public class Game extends Application {
                                 i.setRecordTime(levelTime);
                                 highscoreLbl.setText("Huippuaika: " + i.getRecordTime());
                                 levels.writeFile();
+                                levelList = levels.getLevels();
                             }
                         }
                     }
-                    levels = new Levels();
                     running = false;
                     HBox completedPane = new HBox(new Label("Läpäisit tason!"));
                     completedPane.setPadding(new Insets(10));
