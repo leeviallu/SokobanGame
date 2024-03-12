@@ -2,6 +2,9 @@ package org.example.sokoban;
 
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
+
+import java.io.*;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -89,6 +92,47 @@ public class Layout {
         this.gridpane = gridpane;
     }
 
+    public void handleFile() {
+        String fName = "levels.txt";
+        ObjectOutputStream wFile = null;
+        try {
+            wFile = new ObjectOutputStream(new FileOutputStream(fName));
+            wFile.writeObject(levelList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ObjectInputStream rFile = null;
+        Level[] rLevels = new Level[levelList.length];
+        try {
+            rFile = new ObjectInputStream(new FileInputStream(fName));
+            rLevels = (Level[])rFile.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (wFile != null) {
+                    wFile.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (rFile != null) {
+                    rFile.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Level lvl : rLevels) {
+            System.out.println(lvl.getLevelNumber());
+            System.out.println(Arrays.toString(lvl.getLevel()));
+            System.out.println(lvl.getRecordTime());
+        }
+    }
     public Layout() {
         levelList = getLevelList();
         board = levelList[0].getLevel();
@@ -130,6 +174,7 @@ public class Layout {
             }
         }
 
+        handleFile();
         initBoard();
     }
 
@@ -174,6 +219,7 @@ public class Layout {
             }
         }
 
+        handleFile();
         initBoard();
     }
 

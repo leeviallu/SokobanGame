@@ -1,6 +1,8 @@
 package org.example.sokoban;
 
-public class Level {
+import java.io.Serializable;
+
+public class Level implements Serializable {
     private String[] level;
     private int levelNumber;
     private int recordTime;
