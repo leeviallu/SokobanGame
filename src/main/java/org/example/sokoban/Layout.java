@@ -2,9 +2,6 @@ package org.example.sokoban;
 
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
-
-import java.io.*;
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -19,59 +16,6 @@ public class Layout {
     private GridPane gridpane = new GridPane();
     private Character character = new Character();
     private final String[] board;
-    protected Level[] levelList;
-    public Level[] getLevelList() {
-        String[][] levels = {
-                {
-                        "#######",
-                        "#. # .#",
-                        "# $@$ #",
-                        "#  #  #",
-                        "#######"
-                },
-                {
-                        "#####",
-                        "#@  ##",
-                        "#.$* #",
-                        "#  # #",
-                        "#    #",
-                        "######"
-
-                },
-                {
-                        "######",
-                        "#@   ##",
-                        "# $$  #",
-                        "# #. .#",
-                        "#     #",
-                        "#######"
-                },
-                {
-                        "  #### ",
-                        "###  # ",
-                        "#@ .$##",
-                        "#   $ #",
-                        "# #.  #",
-                        "#     #",
-                        "#######"
-                },
-                {
-                        "#######",
-                        "#@ ..##",
-                        "# #$ ##",
-                        "# #   #",
-                        "#  $# #",
-                        "#  *  #",
-                        "#######"
-                }
-
-        };
-        Level[] levelList = new Level[levels.length];
-        for (int i = 0; i < levels.length; i++) {
-            levelList[i] = new Level(levels[i], i+1);
-        }
-        return levelList;
-    }
 
     public Dictionary<Pair<Integer, Integer>, Integer> getDict() {
         return mutableDict;
@@ -92,94 +36,7 @@ public class Layout {
         this.gridpane = gridpane;
     }
 
-    public void handleFile() {
-        String fName = "levels.txt";
-        ObjectOutputStream wFile = null;
-        try {
-            wFile = new ObjectOutputStream(new FileOutputStream(fName));
-            wFile.writeObject(levelList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        ObjectInputStream rFile = null;
-        Level[] rLevels = new Level[levelList.length];
-        try {
-            rFile = new ObjectInputStream(new FileInputStream(fName));
-            rLevels = (Level[])rFile.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (wFile != null) {
-                    wFile.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (rFile != null) {
-                    rFile.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        for (Level lvl : rLevels) {
-            System.out.println(lvl.getLevelNumber());
-            System.out.println(Arrays.toString(lvl.getLevel()));
-            System.out.println(lvl.getRecordTime());
-        }
-    }
-    public Layout() {
-        levelList = getLevelList();
-        board = levelList[0].getLevel();
-
-        char wallChar = '#';
-        char floorChar = ' ';
-        char characterChar = '@';
-        char boxChar = '$';
-        char targetChar = '.';
-        char boxOnTargetChar = '*';
-
-        for (int row = 0; row < board.length; row++) {
-            char[] arr = board[row].toCharArray();
-            for (int col = 0; col < arr.length; col++) {
-                if (arr[col] == wallChar) {
-                    layoutDict.put(new Pair<>(col, row), WALL);
-                } else if (arr[col] == floorChar || arr[col] == characterChar || arr[col] == boxChar) {
-                    layoutDict.put(new Pair<>(col, row), FLOOR);
-                } else if (arr[col] == targetChar || arr[col] == boxOnTargetChar) {
-                    layoutDict.put(new Pair<>(col, row), TARGET);
-                }
-            }
-        }
-
-        for (int row = 0; row < board.length; row++) {
-            char[] arr = board[row].toCharArray();
-            for (int col = 0; col < arr.length; col++) {
-                if (arr[col] == wallChar) {
-                    mutableDict.put(new Pair<>(col, row), WALL);
-                } else if (arr[col] == floorChar) {
-                    mutableDict.put(new Pair<>(col, row), FLOOR);
-                } else if (arr[col] == characterChar) {
-                    mutableDict.put(new Pair<>(col, row), CHARACTER);
-                } else if (arr[col] == boxChar || arr[col] == boxOnTargetChar) {
-                    mutableDict.put(new Pair<>(col, row), BOX);
-                } else if (arr[col] == targetChar) {
-                    mutableDict.put(new Pair<>(col, row), TARGET);
-                }
-            }
-        }
-
-        handleFile();
-        initBoard();
-    }
-
-    public Layout(int level) {
-        levelList = getLevelList();
+    public Layout(Level[] levelList, int level) {
         board = levelList[level].getLevel();
 
         char wallChar = '#';
@@ -218,8 +75,6 @@ public class Layout {
                 }
             }
         }
-
-        handleFile();
         initBoard();
     }
 

@@ -12,20 +12,20 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 public class Game extends Application {
-    private int currentLevel;
     private final int DICTCLEAR = 0;
     private final int DICTCHARACTER = 3;
     private final int DICTBOX = 4;
-    private Layout layout = new Layout();
-    private GridPane gridPane = layout.getBoard();
-    private Character character = layout.getCharacter();
+    private Layout layout;
+    private GridPane gridPane;
+    private Character character;
+    private int currentLevel;
+    private Level[] levelList;
+    private final Levels levels = new Levels();
     private final VBox vBox = new VBox();
     private final HBox btnBox = new HBox();
     private final Button restartBtn = new Button("Restart");
     private final Button nextBtn = new Button("Next level");
     private final Button prevBtn = new Button("Previous level");
-
-
     private boolean running;
     private int charPosX;
     private int charPosY;
@@ -82,7 +82,7 @@ public class Game extends Application {
     public void restartLevel(int level) {
         running = true;
         vBox.getChildren().clear();
-        layout = new Layout(level);
+        layout = new Layout(levelList, level);
         gridPane = layout.getBoard();
         character = layout.getCharacter();
         vBox.getChildren().addAll(gridPane, btnBox);
@@ -117,6 +117,14 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        levels.writeFile();
+        levels.readFile();
+        levelList = levels.getLevels();
+
+        layout = new Layout(levelList, 0);
+        gridPane = layout.getBoard();
+        character = layout.getCharacter();
+
         running = true;
         currentLevel = 0;
         btnBox.getChildren().addAll(prevBtn,restartBtn,nextBtn);
@@ -127,7 +135,7 @@ public class Game extends Application {
         });
         restartBtn.setFocusTraversable(false);
         nextBtn.setOnAction(e -> {
-            if (layout.levelList.length > currentLevel + 1) {
+            if (levelList.length > currentLevel + 1) {
                 currentLevel ++;
                 restartLevel(currentLevel);
                 layout.initBoard();
