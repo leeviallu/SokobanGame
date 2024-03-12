@@ -138,7 +138,6 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        levels.printFileContent();
         levels.writeFile();
         levels.readFile();
         levelList = levels.getLevels();

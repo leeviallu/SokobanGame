@@ -1,8 +1,6 @@
 package org.example.sokoban;
 
 import java.io.*;
-import java.util.Arrays;
-
 public class Levels {
     String[][] initialLevels = {
             {
@@ -53,10 +51,8 @@ public class Levels {
     public Levels() {
         File f = new File(fName);
         if(f.exists() && !f.isDirectory()) {
-            System.out.println("Tiedosto löytyi.");
             readFile();
         } else {
-            System.out.println("Tiedostoa ei löytynyt.");
             levels = initLevels();
         }
     }
@@ -111,15 +107,6 @@ public class Levels {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void printFileContent() {
-        readFile();
-        for (Level lvl : levels) {
-            System.out.println(lvl.getLevelNumber());
-            System.out.println(Arrays.toString(lvl.getLevel()));
-            System.out.println(lvl.getRecordTime());
         }
     }
 }
