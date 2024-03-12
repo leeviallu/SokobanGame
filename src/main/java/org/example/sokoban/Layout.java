@@ -15,13 +15,53 @@ public class Layout {
     private final Dictionary<Pair<Integer, Integer>, Integer> layoutDict = new Hashtable<>();
     private GridPane gridpane = new GridPane();
     private Character character = new Character();
-    private final String[] board = {
-              "#######",
-              "#. # .#",
-              "# $@$ #",
-              "#  #  #",
-              "#######"
+    private final String[] board;
+    protected final String[][] levels = {
+            {
+                    "#######",
+                    "#. # .#",
+                    "# $@$ #",
+                    "#  #  #",
+                    "#######"
+            },
+            {
+                    "#####",
+                    "#@  ##",
+                    "#.$* #",
+                    "#  # #",
+                    "#    #",
+                    "######"
+
+            },
+            {
+                    "######",
+                    "#@   ##",
+                    "# $$  #",
+                    "# #. .#",
+                    "#     #",
+                    "#######"
+            },
+            {
+                    "  #### ",
+                    "###  # ",
+                    "#@ .$##",
+                    "#   $ #",
+                    "# #.  #",
+                    "#     #",
+                    "#######"
+            },
+            {
+                    "#######",
+                    "#@ ..##",
+                    "# #$ ##",
+                    "# #   #",
+                    "#  $# #",
+                    "#  *  #",
+                    "#######"
+            }
+
     };
+
     public Dictionary<Pair<Integer, Integer>, Integer> getDict() {
         return mutableDict;
     }
@@ -42,6 +82,51 @@ public class Layout {
     }
 
     public Layout() {
+        board = levels[0];
+
+        char wallChar = '#';
+        char floorChar = ' ';
+        char characterChar = '@';
+        char boxChar = '$';
+        char targetChar = '.';
+        char boxOnTargetChar = '*';
+
+        for (int row = 0; row < board.length; row++) {
+            char[] arr = board[row].toCharArray();
+            for (int col = 0; col < arr.length; col++) {
+                if (arr[col] == wallChar) {
+                    layoutDict.put(new Pair<>(col, row), WALL);
+                } else if (arr[col] == floorChar || arr[col] == characterChar || arr[col] == boxChar) {
+                    layoutDict.put(new Pair<>(col, row), FLOOR);
+                } else if (arr[col] == targetChar || arr[col] == boxOnTargetChar) {
+                    layoutDict.put(new Pair<>(col, row), TARGET);
+                }
+            }
+        }
+
+        for (int row = 0; row < board.length; row++) {
+            char[] arr = board[row].toCharArray();
+            for (int col = 0; col < arr.length; col++) {
+                if (arr[col] == wallChar) {
+                    mutableDict.put(new Pair<>(col, row), WALL);
+                } else if (arr[col] == floorChar) {
+                    mutableDict.put(new Pair<>(col, row), FLOOR);
+                } else if (arr[col] == characterChar) {
+                    mutableDict.put(new Pair<>(col, row), CHARACTER);
+                } else if (arr[col] == boxChar || arr[col] == boxOnTargetChar) {
+                    mutableDict.put(new Pair<>(col, row), BOX);
+                } else if (arr[col] == targetChar) {
+                    mutableDict.put(new Pair<>(col, row), TARGET);
+                }
+            }
+        }
+
+        initBoard();
+    }
+
+    public Layout(int level) {
+        board = levels[level];
+
         char wallChar = '#';
         char floorChar = ' ';
         char characterChar = '@';

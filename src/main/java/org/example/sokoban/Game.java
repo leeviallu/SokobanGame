@@ -2,28 +2,37 @@ package org.example.sokoban;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 public class Game extends Application {
+    private int currentLevel;
     private final int DICTCLEAR = 0;
-    private final int DICTWALL = 1;
     private final int DICTCHARACTER = 3;
     private final int DICTBOX = 4;
-    private final Layout layout = new Layout();
-    private final GridPane gridPane = layout.getBoard();
-    private final Character character = layout.getCharacter();
-    private final VBox vBox = new VBox(gridPane);
-    private boolean running = true;
+    private Layout layout = new Layout();
+    private GridPane gridPane = layout.getBoard();
+    private Character character = layout.getCharacter();
+    private final VBox vBox = new VBox();
+    private final HBox btnBox = new HBox();
+    private final Button restartBtn = new Button("Restart");
+    private final Button nextBtn = new Button("Next level");
+    private final Button prevBtn = new Button("Previous level");
+
+
+    private boolean running;
     private int charPosX;
     private int charPosY;
 
     public boolean notWall(int x, int y) {
         Integer value = layout.getDict().get(new Pair<>(x,y));
+        int DICTWALL = 1;
         return value == null || value != DICTWALL;
     }
     public boolean isBox(int x, int y) {
@@ -70,11 +79,18 @@ public class Game extends Application {
             charPosY = character.getPosY();
         }
     }
+    public void restartLevel(int level) {
+        running = true;
+        vBox.getChildren().clear();
+        layout = new Layout(level);
+        gridPane = layout.getBoard();
+        character = layout.getCharacter();
+        vBox.getChildren().addAll(gridPane, btnBox);
+    }
 
-    @Override
-    public void start(Stage primaryStage) {
-        Scene kehys = new Scene(vBox, 1200, 650);
-        kehys.setOnKeyPressed(e -> {
+    private Scene getScene() {
+        Scene scene = new Scene(vBox, 1200, 650);
+        scene.setOnKeyPressed(e -> {
             if (running) {
                 charPosX = character.getPosX();
                 charPosY = character.getPosY();
@@ -96,10 +112,43 @@ public class Game extends Application {
                 }
             }
         });
+        return scene;
+    }
 
+    @Override
+    public void start(Stage primaryStage) {
+        running = true;
+        currentLevel = 0;
+        btnBox.getChildren().addAll(prevBtn,restartBtn,nextBtn);
+        vBox.getChildren().addAll(gridPane, btnBox);
+        restartBtn.setOnAction(e -> {
+            restartLevel(currentLevel);
+            layout.initBoard();
+
+        });
+        restartBtn.setFocusTraversable(false);
+        nextBtn.setOnAction(e -> {
+            if (layout.levels.length > currentLevel + 1) {
+                currentLevel ++;
+            }
+            restartLevel(currentLevel);
+            layout.initBoard();
+        });
+        nextBtn.setFocusTraversable(false);
+        prevBtn.setOnAction(e -> {
+            if (currentLevel != 0) {
+                currentLevel --;
+
+            }
+            restartLevel(currentLevel);
+            layout.initBoard();
+
+        });
+        prevBtn.setFocusTraversable(false);
+
+        Scene scene = getScene();
         primaryStage.setTitle("Kenttä 1");
-        primaryStage.setScene(kehys);
+        primaryStage.setScene(scene);
         primaryStage.show();
-        gridPane.requestFocus();
     }
 }
