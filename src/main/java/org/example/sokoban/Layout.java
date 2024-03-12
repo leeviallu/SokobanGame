@@ -16,51 +16,59 @@ public class Layout {
     private GridPane gridpane = new GridPane();
     private Character character = new Character();
     private final String[] board;
-    protected final String[][] levels = {
-            {
-                    "#######",
-                    "#. # .#",
-                    "# $@$ #",
-                    "#  #  #",
-                    "#######"
-            },
-            {
-                    "#####",
-                    "#@  ##",
-                    "#.$* #",
-                    "#  # #",
-                    "#    #",
-                    "######"
+    protected Level[] levelList;
+    public Level[] getLevelList() {
+        String[][] levels = {
+                {
+                        "#######",
+                        "#. # .#",
+                        "# $@$ #",
+                        "#  #  #",
+                        "#######"
+                },
+                {
+                        "#####",
+                        "#@  ##",
+                        "#.$* #",
+                        "#  # #",
+                        "#    #",
+                        "######"
 
-            },
-            {
-                    "######",
-                    "#@   ##",
-                    "# $$  #",
-                    "# #. .#",
-                    "#     #",
-                    "#######"
-            },
-            {
-                    "  #### ",
-                    "###  # ",
-                    "#@ .$##",
-                    "#   $ #",
-                    "# #.  #",
-                    "#     #",
-                    "#######"
-            },
-            {
-                    "#######",
-                    "#@ ..##",
-                    "# #$ ##",
-                    "# #   #",
-                    "#  $# #",
-                    "#  *  #",
-                    "#######"
-            }
+                },
+                {
+                        "######",
+                        "#@   ##",
+                        "# $$  #",
+                        "# #. .#",
+                        "#     #",
+                        "#######"
+                },
+                {
+                        "  #### ",
+                        "###  # ",
+                        "#@ .$##",
+                        "#   $ #",
+                        "# #.  #",
+                        "#     #",
+                        "#######"
+                },
+                {
+                        "#######",
+                        "#@ ..##",
+                        "# #$ ##",
+                        "# #   #",
+                        "#  $# #",
+                        "#  *  #",
+                        "#######"
+                }
 
-    };
+        };
+        Level[] levelList = new Level[levels.length];
+        for (int i = 0; i < levels.length; i++) {
+            levelList[i] = new Level(levels[i], i+1);
+        }
+        return levelList;
+    }
 
     public Dictionary<Pair<Integer, Integer>, Integer> getDict() {
         return mutableDict;
@@ -82,7 +90,8 @@ public class Layout {
     }
 
     public Layout() {
-        board = levels[0];
+        levelList = getLevelList();
+        board = levelList[0].getLevel();
 
         char wallChar = '#';
         char floorChar = ' ';
@@ -125,7 +134,8 @@ public class Layout {
     }
 
     public Layout(int level) {
-        board = levels[level];
+        levelList = getLevelList();
+        board = levelList[level].getLevel();
 
         char wallChar = '#';
         char floorChar = ' ';
