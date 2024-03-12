@@ -12,38 +12,114 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+/** Luokka toteuttaa Sokoban tyylisen pulmapelin.
+ * @author Leevi Leppänen
+ * @version 1.0 2024/03/13
+ */
 public class Game extends Application {
+    /**
+     * Vakio kuvaa sanakirjassa kohtaa, josta hahmo on liikkunut pois.
+     */
     private final int DICTCLEAR = 0;
+    /**
+     * Vakio kuvaa sanakirjassa kohtaa, johon hahmo on liikkunut
+     */
     private final int DICTCHARACTER = 3;
+    /**
+     * Vakio kuvaa sanakirjassa kohtaa, johon laatikko on liikutettu.
+     */
     private final int DICTBOX = 4;
+    /**
+     * Muuttuja luokalle, jossa tehdään kentälle pohja sanakirjan perusteella.
+     */
     private Layout layout;
+    /**
+     * Muuttuja, johon lisätään pelin kenttä
+     */
     private GridPane gridPane;
+    /**
+     * Muuttuja, jolla viitataan pelihahmoon
+     */
     private Character character;
+    /**
+     * Muuttuja, jota käytetään kentän läpäisyajan mittaamiseen
+     */
     private long startTime;
+    /**
+     * Muuttuja, joka kuvaa kenttää, jossa ollaan menossa
+     */
     private int currentLevel = 1;
-    private Level[] levelList;
-    private Levels levels = new Levels();
+    /**
+     * Pelin kentät sisältävä lista, joka muodostetaan tiedostoon tallennetuista kentistä
+     */
+    private final Levels levels = new Levels();
+    /**
+     * VBox, jonka sisällä luokan muu graafinen sisältö on
+     */
     private final VBox vBox = new VBox();
+    /**
+     * HBox, jonka sisällä on pelissä käytettävät napit
+     */
     private final HBox btnBox = new HBox();
+    /**
+     * HBox, jonka sisällä on kentästä kerrottavat tiedot
+     */
     private final HBox infoBox = new HBox();
+    /**
+     * Button, jolla kenttä voidaan aloittaa alusta
+     */
     private final Button restartBtn = new Button("Restart");
+    /**
+     * Button, jolla päästään seuraavaan kenttään
+     */
     private final Button nextBtn = new Button("Next level");
+    /**
+     * Button, jolla päästään aikaisempaan kenttään
+     */
     private final Button prevBtn = new Button("Previous level");
-    private final Label highscoreLbl = new Label("");
+    /**
+     * Label, jossa kerrotaan kentän numero
+     */
     private final Label levelNumberLbl = new Label("");
+    /**
+     * Label parhaalle tulokselle
+     */
+    private final Label highscoreLbl = new Label("");
+    /**
+     * Muuttuja, joka kuvastaa pelin tilaa
+     */
     private boolean running;
+    /**
+     * Muuttuja, joka kuvaa x-akselilla pelihahmon sijaintia
+     */
     private int charPosX;
+    /**
+     * Muuttuja, joka kuvaa y-akselilla pelihahmon sijaintia
+     */
     private int charPosY;
 
+    /**
+     * Metodi selvittää, eihän tietyssä kohdassa ole seinää
+     * @param x sijainti x-akselilla
+     * @param y sijainti y-akselilla
+     */
     public boolean notWall(int x, int y) {
         Integer value = layout.getDict().get(new Pair<>(x,y));
         int DICTWALL = 1;
         return value == null || value != DICTWALL;
     }
+    /**
+     * Metodi selvittää, onko tietyssä kohdassa laatikko
+     * @param x sijainti x-akselilla
+     * @param y sijainti y-akselilla
+     */
     public boolean isBox(int x, int y) {
         Integer value = layout.getDict().get(new Pair<>(x,y));
         return value != null && value == DICTBOX;
     }
+    /**
+     * Metodi mahdollistaa kentässä liikkumisen vasemmalle
+     */
     public void moveLeft() {
         if (isBox(charPosX - 1, charPosY) && notWall(charPosX - 2, charPosY) && !isBox(charPosX - 2, charPosY)) {
             layout.getDict().put(new Pair<>(charPosX - 2, charPosY), DICTBOX);
@@ -54,6 +130,9 @@ public class Game extends Application {
             charPosX = character.getPosX();
         }
     }
+    /**
+     * Metodi mahdollistaa kentässä liikkumisen oikealle
+     */
     public void moveRight() {
         if (isBox(charPosX + 1, charPosY) && notWall(charPosX + 2, charPosY) && !isBox(charPosX + 2, charPosY)) {
             layout.getDict().put(new Pair<>(charPosX + 2, charPosY), DICTBOX);
@@ -64,6 +143,9 @@ public class Game extends Application {
             charPosX = character.getPosX();
         }
     }
+    /**
+     * Metodi mahdollistaa kentässä liikkumisen ylös
+     */
     public void moveUp() {
         if (isBox(charPosX, charPosY - 1) && notWall(charPosX, charPosY - 2) && !isBox(charPosX, charPosY - 2)) {
             layout.getDict().put(new Pair<>(charPosX, charPosY - 2), DICTBOX);
@@ -74,6 +156,9 @@ public class Game extends Application {
             charPosY = character.getPosY();
         }
     }
+    /**
+     * Metodi mahdollistaa kentässä liikkumisen alas
+     */
     public void moveDown() {
         if (isBox(charPosX, charPosY + 1) && notWall(charPosX, charPosY + 2) && !isBox(charPosX, charPosY + 2)) {
             layout.getDict().put(new Pair<>(charPosX, charPosY + 2), DICTBOX);
@@ -84,10 +169,14 @@ public class Game extends Application {
             charPosY = character.getPosY();
         }
     }
+    /**
+     * Metodi renderöi kentän uudelleen
+     * @param level kenttä, joka halutaan renderöidä
+     */
     public void restartLevel(int level) {
         running = true;
         vBox.getChildren().clear();
-        layout = new Layout(levelList, level);
+        layout = new Layout(levels.getLevels(), level);
         gridPane = layout.getBoard();
         character = layout.getCharacter();
         levelNumberLbl.setText("Taso: " + levels.getLevels()[currentLevel - 1].getLevelNumber());
@@ -99,7 +188,10 @@ public class Game extends Application {
         vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         startTime = System.nanoTime();
     }
-
+    /**
+     * Metodi palauttaa luokan kehyksen. Metodissa mahdollistetaan liikkuminen näppäimistön nappeja painamalla
+     * ja tarkistetaan, onko kenttä mennyt läpi.
+     */
     private Scene getScene() {
         Scene scene = new Scene(vBox, 1200, 650);
         scene.setOnKeyPressed(e -> {
@@ -120,13 +212,12 @@ public class Game extends Application {
                 layout.initBoard();
                 if (layout.isReady()) {
                     double levelTime = (double) (System.nanoTime() - startTime)/1_000_000_000;
-                    for (Level i : levelList) {
+                    for (Level i : levels.getLevels()) {
                         if (i.getLevelNumber() == currentLevel) {
                             if (levelTime < i.getRecordTime()) {
                                 i.setRecordTime(levelTime);
                                 highscoreLbl.setText("Huippuaika: " + i.getRecordTime());
                                 levels.writeFile();
-                                levelList = levels.getLevels();
                             }
                         }
                     }
@@ -139,14 +230,16 @@ public class Game extends Application {
         });
         return scene;
     }
-
+    /**
+     * Metodissa on pääosin käsiteltävänä graafiset oliot, joita ohjelmassa näytetään.
+     * Näiden lisäksi metodi sisältää toimintoja, joita ajoin aikana halutaan suorittaa
+     */
     @Override
     public void start(Stage primaryStage) {
         levels.writeFile();
         levels.readFile();
-        levelList = levels.getLevels();
 
-        layout = new Layout(levelList, 1);
+        layout = new Layout(levels.getLevels(), 1);
         gridPane = layout.getBoard();
         character = layout.getCharacter();
 
@@ -157,7 +250,6 @@ public class Game extends Application {
         } else {
             highscoreLbl.setText("Huippuaika: " + levels.getLevels()[0].getRecordTime());
         }
-
 
         infoBox.setPadding(new Insets(10));
         infoBox.setSpacing(40);
@@ -170,7 +262,7 @@ public class Game extends Application {
         });
         restartBtn.setFocusTraversable(false);
         nextBtn.setOnAction(e -> {
-            if (levelList.length > currentLevel) {
+            if (levels.getLevels().length > currentLevel) {
                 currentLevel ++;
                 restartLevel(currentLevel);
                 layout.initBoard();
