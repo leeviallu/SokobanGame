@@ -84,7 +84,7 @@ public class Game extends Application {
     /**
      * Label parhaalle tulokselle
      */
-    private final Label highscoreLbl = new Label("");
+    private final Label highScoreLbl = new Label("");
     /**
      * Muuttuja, joka kuvastaa pelin tilaa
      */
@@ -179,11 +179,11 @@ public class Game extends Application {
         layout = new Layout(levels.getLevels(), level);
         gridPane = layout.getBoard();
         character = layout.getCharacter();
-        levelNumberLbl.setText("Taso: " + levels.getLevels()[currentLevel - 1].getLevelNumber());
+        levelNumberLbl.setText("Level: " + levels.getLevels()[currentLevel - 1].getLevelNumber());
         if (levels.getLevels()[currentLevel - 1].getRecordTime() == Double.POSITIVE_INFINITY) {
-            highscoreLbl.setText("Kenttää ei ole vielä läpäisty");
+            highScoreLbl.setText("The level hasn't been passed yet");
         } else {
-            highscoreLbl.setText("Huippuaika: " + levels.getLevels()[currentLevel -1].getRecordTime());
+            highScoreLbl.setText("High Score: " + levels.getLevels()[currentLevel -1].getRecordTime());
         }
         vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         startTime = System.nanoTime();
@@ -216,13 +216,13 @@ public class Game extends Application {
                         if (i.getLevelNumber() == currentLevel) {
                             if (levelTime < i.getRecordTime()) {
                                 i.setRecordTime(levelTime);
-                                highscoreLbl.setText("Huippuaika: " + i.getRecordTime());
+                                highScoreLbl.setText("High Score: " + i.getRecordTime());
                                 levels.writeFile();
                             }
                         }
                     }
                     running = false;
-                    HBox completedPane = new HBox(new Label("Läpäisit tason!"));
+                    HBox completedPane = new HBox(new Label("Level completed!"));
                     completedPane.setPadding(new Insets(10));
                     vBox.getChildren().add(completedPane);
                 }
@@ -244,16 +244,16 @@ public class Game extends Application {
         character = layout.getCharacter();
 
         running = true;
-        levelNumberLbl.setText("Taso: " + levels.getLevels()[0].getLevelNumber());
+        levelNumberLbl.setText("Level: " + levels.getLevels()[0].getLevelNumber());
         if (levels.getLevels()[0].getRecordTime() == Double.POSITIVE_INFINITY) {
-            highscoreLbl.setText("Kenttää ei ole vielä läpäisty");
+            highScoreLbl.setText("The level hasn't been passed yet");
         } else {
-            highscoreLbl.setText("Huippuaika: " + levels.getLevels()[0].getRecordTime());
+            highScoreLbl.setText("High Score: " + levels.getLevels()[0].getRecordTime());
         }
 
         infoBox.setPadding(new Insets(10));
         infoBox.setSpacing(40);
-        infoBox.getChildren().addAll(levelNumberLbl, highscoreLbl);
+        infoBox.getChildren().addAll(levelNumberLbl, highScoreLbl);
         btnBox.getChildren().addAll(prevBtn,restartBtn,nextBtn);
         vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         restartBtn.setOnAction(e -> {
