@@ -1,7 +1,14 @@
 package org.example.sokoban;
 
 import java.io.*;
+
+/**
+ * Luokka luo olion, jossa on pelissä esiintyvät tasot.
+ */
 public class Levels {
+    /**
+     * Peliin manuaalisesti syötetyt kentät
+     */
     String[][] initialLevels = {
             {
                     "#######",
@@ -46,8 +53,17 @@ public class Levels {
                     "#######"
             }
     };
+    /**
+     * Tiedoston nimi
+     */
     private final String fName = "levels.txt";
+    /**
+     * Lista tasoista
+     */
     private Level[] levels;
+    /**
+     * Alustaja hakee listan tasoista lähtökohtaisesti tiedostosta, mutta jos tiedostoa ei ole, luodaan tasot manuaalisesti
+     */
     public Levels() {
         File f = new File(fName);
         if(f.exists() && !f.isDirectory()) {
@@ -56,14 +72,15 @@ public class Levels {
             levels = initLevels();
         }
     }
-
+    /**
+     * Palauttaa listan tasoista
+     */
     public Level[] getLevels() {
         return levels;
     }
-    public void setLevels(Level[] levels) {
-        this.levels = levels;
-    }
-
+    /**
+     * Tasojen luominen manuaalisesti
+     */
     public Level[] initLevels() {
         Level[] levelList = new Level[initialLevels.length];
         for (int i = 0; i < initialLevels.length; i++) {
@@ -71,7 +88,9 @@ public class Levels {
         }
         return levelList;
     }
-
+    /**
+     * Luetaan tasot tiedostosta
+     */
     public void readFile() {
         ObjectInputStream rFile = null;
         Level[] rLevels;
@@ -91,7 +110,9 @@ public class Levels {
             }
         }
     }
-
+    /**
+     * Kirjoitetaan tiedostoon tasot
+     */
     public void writeFile() {
         ObjectOutputStream wFile = null;
         try {
