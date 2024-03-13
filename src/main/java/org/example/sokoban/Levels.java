@@ -74,19 +74,21 @@ public class Levels {
     }
     /**
      * Palauttaa listan tasoista
+     * @return tasot listana
      */
     public Level[] getLevels() {
         return levels;
     }
     /**
      * Tasojen luominen manuaalisesti
+     * @return tasot listana
      */
     public Level[] initLevels() {
-        Level[] levelList = new Level[initialLevels.length];
+        Level[] levels = new Level[initialLevels.length];
         for (int i = 0; i < initialLevels.length; i++) {
-            levelList[i] = new Level(initialLevels[i], i+1);
+            levels[i] = new Level(initialLevels[i], i+1);
         }
-        return levelList;
+        return levels;
     }
     /**
      * Luetaan tasot tiedostosta

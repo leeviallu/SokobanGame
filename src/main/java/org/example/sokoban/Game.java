@@ -102,6 +102,7 @@ public class Game extends Application {
      * Metodi selvittää, eihän tietyssä kohdassa ole seinää
      * @param x sijainti x-akselilla
      * @param y sijainti y-akselilla
+     * @return true/false
      */
     public boolean notWall(int x, int y) {
         Integer value = layout.getDict().get(new Pair<>(x,y));
@@ -112,6 +113,7 @@ public class Game extends Application {
      * Metodi selvittää, onko tietyssä kohdassa laatikko
      * @param x sijainti x-akselilla
      * @param y sijainti y-akselilla
+     * @return true/false
      */
     public boolean isBox(int x, int y) {
         Integer value = layout.getDict().get(new Pair<>(x,y));

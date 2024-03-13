@@ -51,18 +51,21 @@ public class Layout {
     private final String[] board;
     /**
      * Metodi, jolla voidaan hakea muuttuva sanakirja
+     * @return sanakirja muuttuvista asioista
      */
     public Dictionary<Pair<Integer, Integer>, Integer> getDict() {
         return mutableDict;
     }
     /**
      * Metodi, jolla voidaan hakea pelihahmo
+     * @return pelihahmo
      */
     public Character getCharacter() {
         return character;
     }
     /**
      * Metodi, jolla voidaan hakea graafinen pelilauta
+     * @return pelilauta
      */
     public GridPane getBoard() {
         return gridpane;
@@ -149,6 +152,7 @@ public class Layout {
     }
     /**
      * Metodi, jolla voidaan tarkistaa onko pelaaja läpäissyt kentän
+     * @return true/false
      */
     public boolean isReady() {
         for (int row = 0; row < board.length; row++) {

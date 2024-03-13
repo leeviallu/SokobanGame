@@ -20,6 +20,8 @@ public class Level implements Serializable {
     private double recordTime;
     /**
      * Alustaa tason pohjapiirrustuksen, numeron ja ennätysajan
+     * @param level tason pohjapiirrustus
+     * @param levelNumber tason numero
      */
     public Level(String[] level, int levelNumber) {
         this.level = level;
@@ -28,24 +30,28 @@ public class Level implements Serializable {
     }
     /**
      * Palauttaa pohjapiirrustuksen
+     * @return tason pohjapiirrustus
      */
     public String[] getLevel() {
         return level;
     }
     /**
-     * Palauttaa kentän numeron
+     * Palauttaa tason numeron
+     * @return tason numero
      */
     public int getLevelNumber() {
         return levelNumber;
     }
     /**
      * Palauttaa ennätysajan
+     * @return ennätysaika
      */
     public double getRecordTime() {
         return recordTime;
     }
     /**
-     * Asettaa oliolle ennätysajan
+     * Asettaa tasolle ennätysajan
+     * @param recordTime ennätysaika
      */
     public void setRecordTime(double recordTime) {
         this.recordTime = recordTime;

@@ -25,24 +25,28 @@ public class Character extends Circle {
     }
     /**
      * Asettaa hahmolle uuden sijainnin x-akselilla
+     * @param posX sijainti x-akselilla
      */
     public void setPosX(int posX) {
         this.posX = posX;
     }
     /**
      * Asettaa hahmolle uuden sijainnin y-akselilla
+     * @param posY sijainti y-akselilla
      */
     public void setPosY(int posY) {
         this.posY = posY;
     }
     /**
      * Palauttaa hahmon sijainnin x-akselilla
+     * @return sijainti x-akselilla
      */
     public int getPosX() {
         return posX;
     }
     /**
      * Palauttaa hahmon sijainnin y-akselilla
+     * @return sijainti y-akselilla
      */
     public int getPosY() {
         return posY;
