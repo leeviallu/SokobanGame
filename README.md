@@ -5,8 +5,7 @@ In this project I created a game known as Sokoban. The game tracks the time you 
 
 
 ## Screenshots
-![App Screenshot](https://github.com/leeviallu/SokobanGame/blob/main/gameplay.png)
-
+<img src="[http://....jpg](https://github.com/leeviallu/SokobanGame/blob/main/gameplay.png)" width="200" height="200" />
 
 ## Creating own levels
 The game already has few maps for you to try, but if you want to try other maps, you can easily add them by editing the code.
