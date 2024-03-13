@@ -3,19 +3,16 @@ package org.example.sokoban;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Luokka luo olion seinälle.
+ */
 public class Wall extends Rectangle {
-    private Color color = Color.BLACK;
-
+    /**
+     * Alustaa seinän korkeuden, leveyden ja värin
+     */
     public Wall() {
-        initWall();
-    }
-    public Wall(Color color) {
-        this.color = color;
-        initWall();
-    }
-    public void initWall() {
         setHeight(50);
         setWidth(50);
-        setFill(color);
+        setFill(Color.BLACK);;
     }
 }
