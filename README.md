@@ -6,7 +6,7 @@ In this project I created a game known as Sokoban. The game tracks the time you 
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot]([https://via.placeholder.com/468x300?text=App+Screenshot+Here](https://github.com/leeviallu/SokobanGame/blob/main/gameplay.png))
 
 
 ## Creating own levels
