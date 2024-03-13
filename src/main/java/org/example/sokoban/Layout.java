@@ -5,37 +5,75 @@ import javafx.util.Pair;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+/**
+ * Luokan tehtävänä on muodostaa pelissä olevalle kentälle pohja
+ */
 public class Layout {
+    /**
+     * Vakio viittaa seinään sanakirjassa
+     */
     private final int WALL = 1;
+    /**
+     * Vakio viittaa lattiaan sanakirjassa
+     */
     private final int FLOOR = 2;
+    /**
+     * Vakio viittaa pelihahmoon sanakirjassa
+     */
     private final int CHARACTER = 3;
+    /**
+     * Vakio viittaa laatikkoon sanakirjassa
+     */
     private final int BOX = 4;
+    /**
+     * Vakio viittaa kohdelaattaan sanakirjassa
+     */
     private final int TARGET = 5;
+    /**
+     * Sanakirja, jossa säilytetään pelissä liikkuvia asioita, kuten pelihahmo ja laatikot
+     */
     private Dictionary<Pair<Integer, Integer>, Integer> mutableDict = new Hashtable<>();
+    /**
+     * Sanakirja, jossa säilytetään pelissä paikallaan säilyviä asioita, kuten seinät ja lattia.
+     */
     private final Dictionary<Pair<Integer, Integer>, Integer> layoutDict = new Hashtable<>();
+    /**
+     * Gridpane sisältää graafisen pelilaudan
+     */
     private GridPane gridpane = new GridPane();
+    /**
+     * Muuttujalla viitataan pelihahmoon
+     */
     private Character character = new Character();
+    /**
+     * Muuttujalla viitataan kenttään, joka halutaan toteuttaa
+     */
     private final String[] board;
-
+    /**
+     * Metodi, jolla voidaan hakea muuttuva sanakirja
+     */
     public Dictionary<Pair<Integer, Integer>, Integer> getDict() {
         return mutableDict;
     }
-    public void setDict(Dictionary<Pair<Integer, Integer>, Integer> dict) {
-        this.mutableDict = dict;
-    }
+    /**
+     * Metodi, jolla voidaan hakea pelihahmo
+     */
     public Character getCharacter() {
         return character;
     }
-    public void setCharacter(Character character) {
-        this.character = character;
-    }
+    /**
+     * Metodi, jolla voidaan hakea graafinen pelilauta
+     */
     public GridPane getBoard() {
         return gridpane;
     }
-    public void setBoard(GridPane gridpane) {
-        this.gridpane = gridpane;
-    }
 
+    /**
+     * Alustajametodi, jossa sijoitetaan sanakirjoihin kentässä esiintyvät oliot ja kutsutaan metodia,
+     * joka luo sanakirjojen pohjalta pelilaudan
+     * @param levelList lista pelikentistä
+     * @param level kentän numero
+     */
     public Layout(Level[] levelList, int level) {
         level --;
         board = levelList[level].getLevel();
@@ -79,6 +117,9 @@ public class Layout {
         initBoard();
     }
 
+    /**
+     * Metodi, joka alustaa pelilaudan sanakirjojen sisällön perusteella.
+     */
     public void initBoard() {
         gridpane.getChildren().clear();
         for (int row = 0; row < board.length; row++) {
@@ -106,6 +147,9 @@ public class Layout {
             }
         }
     }
+    /**
+     * Metodi, jolla voidaan tarkistaa onko pelaaja läpäissyt kentän
+     */
     public boolean isReady() {
         for (int row = 0; row < board.length; row++) {
             char[] arr = board[row].toCharArray();
