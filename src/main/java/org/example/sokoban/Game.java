@@ -185,7 +185,7 @@ public class Game extends Application {
         if (levels.getLevels()[currentLevel - 1].getRecordTime() == Double.POSITIVE_INFINITY) {
             highScoreLbl.setText("The level hasn't been passed yet");
         } else {
-            highScoreLbl.setText("High Score: " + levels.getLevels()[currentLevel -1].getRecordTime());
+            highScoreLbl.setText("High Score: " + Math.round(levels.getLevels()[currentLevel -1].getRecordTime() * 100.0) / 100.0 + " seconds");
         }
         vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         startTime = System.nanoTime();
@@ -218,7 +218,8 @@ public class Game extends Application {
                         if (i.getLevelNumber() == currentLevel) {
                             if (levelTime < i.getRecordTime()) {
                                 i.setRecordTime(levelTime);
-                                highScoreLbl.setText("High Score: " + i.getRecordTime());
+
+                                highScoreLbl.setText("High Score: " + Math.round(i.getRecordTime() * 100) / 100.0 + " seconds");
                                 levels.writeFile();
                             }
                         }
@@ -250,7 +251,7 @@ public class Game extends Application {
         if (levels.getLevels()[0].getRecordTime() == Double.POSITIVE_INFINITY) {
             highScoreLbl.setText("The level hasn't been passed yet");
         } else {
-            highScoreLbl.setText("High Score: " + levels.getLevels()[0].getRecordTime());
+            highScoreLbl.setText("High Score: " + Math.round(levels.getLevels()[0].getRecordTime() * 100.0) / 100.0 + " seconds");
         }
 
         infoBox.setPadding(new Insets(10));
