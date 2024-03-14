@@ -191,6 +191,27 @@ public class Game extends Application {
         startTime = System.nanoTime();
     }
     /**
+     * Metodi muokkaa tason ennätysaikaa, jos sellainen on tehty ja ilmoittaa käyttäjälle, että taso on läpi.
+     */
+    public void handleLevelCompleted() {
+        double levelTime = (double) (System.nanoTime() - startTime)/1_000_000_000;
+        for (Level i : levels.getLevels()) {
+            if (i.getLevelNumber() == currentLevel) {
+                if (levelTime < i.getRecordTime()) {
+                    i.setRecordTime(levelTime);
+
+                    highScoreLbl.setText("High Score: " + Math.round(i.getRecordTime() * 100) / 100.0 + " seconds");
+                    levels.writeFile();
+                }
+            }
+        }
+        running = false;
+        HBox completedPane = new HBox(new Label("Level completed!"));
+        completedPane.setPadding(new Insets(10));
+        vBox.getChildren().add(completedPane);
+    }
+
+    /**
      * Metodi palauttaa luokan kehyksen. Metodissa mahdollistetaan liikkuminen näppäimistön nappeja painamalla
      * ja tarkistetaan, onko kenttä mennyt läpi.
      */
@@ -213,40 +234,20 @@ public class Game extends Application {
                 layout.getDict().put(new Pair<>(charPosX, charPosY), DICTCHARACTER);
                 layout.initBoard();
                 if (layout.isReady()) {
-                    double levelTime = (double) (System.nanoTime() - startTime)/1_000_000_000;
-                    for (Level i : levels.getLevels()) {
-                        if (i.getLevelNumber() == currentLevel) {
-                            if (levelTime < i.getRecordTime()) {
-                                i.setRecordTime(levelTime);
-
-                                highScoreLbl.setText("High Score: " + Math.round(i.getRecordTime() * 100) / 100.0 + " seconds");
-                                levels.writeFile();
-                            }
-                        }
-                    }
-                    running = false;
-                    HBox completedPane = new HBox(new Label("Level completed!"));
-                    completedPane.setPadding(new Insets(10));
-                    vBox.getChildren().add(completedPane);
+                    handleLevelCompleted();
                 }
             }
         });
         return scene;
     }
     /**
-     * Metodissa on pääosin käsiteltävänä graafiset oliot, joita ohjelmassa näytetään.
-     * Näiden lisäksi metodi sisältää toimintoja, joita ajoin aikana halutaan suorittaa
+     * Metodissa alustetaan sovelluksen näkymä,
+     * johon kuuluu tason tiedot, taso sekä napit tason vaihtamiseen ja uudelleenkäynnistykseen.
      */
-    @Override
-    public void start(Stage primaryStage) {
-        levels.writeFile();
-        levels.readFile();
-
-        layout = new Layout(levels.getLevels(), 1);
+    public void initView() {
         gridPane = layout.getBoard();
         character = layout.getCharacter();
 
-        running = true;
         levelNumberLbl.setText("Level: " + levels.getLevels()[0].getLevelNumber());
         if (levels.getLevels()[0].getRecordTime() == Double.POSITIVE_INFINITY) {
             highScoreLbl.setText("The level hasn't been passed yet");
@@ -280,6 +281,18 @@ public class Game extends Application {
             }
         });
         prevBtn.setFocusTraversable(false);
+    }
+    /**
+     * Metodissa haetaan käytettävät tasot, alustetaan näkymä ja käynnistetään suoritus.
+     */
+    @Override
+    public void start(Stage primaryStage) {
+        levels.writeFile();
+        levels.readFile();
+        layout = new Layout(levels.getLevels(), 1);
+
+        initView();
+        running = true;
         startTime = System.nanoTime();
         Scene scene = getScene();
         primaryStage.setTitle("Sokoban");
