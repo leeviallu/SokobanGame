@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Luokka luo olion, jossa on pelissä esiintyvät tasot.
  */
-public class Levels {
+public class Levels implements HandleFile {
     /**
      * Peliin manuaalisesti syötetyt kentät
      */
