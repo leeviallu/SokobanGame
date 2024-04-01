@@ -101,14 +101,14 @@ public class Levels implements HandleFile {
             rLevels = (Level[])rFile.readObject();
             levels = rLevels;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Tiedoston lukemisessa ilmeni virhe.");
         } finally {
             try {
                 if (rFile != null) {
                     rFile.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Tiedoston lukemisessa ilmeni virhe.");
             }
         }
     }
@@ -121,14 +121,14 @@ public class Levels implements HandleFile {
             wFile = new ObjectOutputStream(new FileOutputStream(fName));
             wFile.writeObject(levels);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Tiedoston kirjoittamisessa ilmeni virhe.");
         } finally {
             try {
                 if (wFile != null) {
                     wFile.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Tiedoston kirjoittamisessa ilmeni virhe.");
             }
         }
     }
