@@ -52,7 +52,7 @@ public class Game extends Application {
     /**
      * Pelin kentät sisältävä lista, joka muodostetaan tiedostoon tallennetuista kentistä
      */
-    private final Levels levels = new Levels();
+    private final InitLevels levels = new InitLevels();
     /**
      * VBox, jonka sisällä luokan muu graafinen sisältö on
      */
@@ -178,14 +178,14 @@ public class Game extends Application {
     public void restartLevel(int level) {
         running = true;
         vBox.getChildren().clear();
-        layout = new Layout(levels.getLevels(), level);
+        layout = new Layout(InitLevels.levels, level);
         gridPane = layout.getBoard();
         character = layout.getCharacter();
-        levelNumberLbl.setText("Level: " + levels.getLevels()[currentLevel - 1].getLevelNumber());
-        if (levels.getLevels()[currentLevel - 1].getRecordTime() == Double.POSITIVE_INFINITY) {
+        levelNumberLbl.setText("Level: " + InitLevels.levels[currentLevel - 1].getLevelNumber());
+        if (InitLevels.levels[currentLevel - 1].getRecordTime() == Double.POSITIVE_INFINITY) {
             highScoreLbl.setText("The level hasn't been passed yet");
         } else {
-            highScoreLbl.setText("High Score: " + Math.round(levels.getLevels()[currentLevel -1].getRecordTime() * 100.0) / 100.0 + " seconds");
+            highScoreLbl.setText("High Score: " + Math.round(InitLevels.levels[currentLevel -1].getRecordTime() * 100.0) / 100.0 + " seconds");
         }
         vBox.getChildren().addAll(infoBox, gridPane, btnBox);
         startTime = System.nanoTime();
@@ -195,13 +195,13 @@ public class Game extends Application {
      */
     public void handleLevelCompleted() {
         double levelTime = (double) (System.nanoTime() - startTime)/1_000_000_000;
-        for (Level i : levels.getLevels()) {
+        for (Level i : InitLevels.levels) {
             if (i.getLevelNumber() == currentLevel) {
                 if (levelTime < i.getRecordTime()) {
                     i.setRecordTime(levelTime);
 
                     highScoreLbl.setText("High Score: " + Math.round(i.getRecordTime() * 100) / 100.0 + " seconds");
-                    levels.writeFile();
+                    InitLevels.writeFile(InitLevels.levels);
                 }
             }
         }
@@ -248,11 +248,11 @@ public class Game extends Application {
         gridPane = layout.getBoard();
         character = layout.getCharacter();
 
-        levelNumberLbl.setText("Level: " + levels.getLevels()[0].getLevelNumber());
-        if (levels.getLevels()[0].getRecordTime() == Double.POSITIVE_INFINITY) {
+        levelNumberLbl.setText("Level: " + InitLevels.levels[0].getLevelNumber());
+        if (InitLevels.levels[0].getRecordTime() == Double.POSITIVE_INFINITY) {
             highScoreLbl.setText("The level hasn't been passed yet");
         } else {
-            highScoreLbl.setText("High Score: " + Math.round(levels.getLevels()[0].getRecordTime() * 100.0) / 100.0 + " seconds");
+            highScoreLbl.setText("High Score: " + Math.round(InitLevels.levels[0].getRecordTime() * 100.0) / 100.0 + " seconds");
         }
 
         infoBox.setPadding(new Insets(10));
@@ -266,7 +266,7 @@ public class Game extends Application {
         });
         restartBtn.setFocusTraversable(false);
         nextBtn.setOnAction(e -> {
-            if (levels.getLevels().length > currentLevel) {
+            if (InitLevels.levels.length > currentLevel) {
                 currentLevel ++;
                 restartLevel(currentLevel);
                 layout.initBoard();
@@ -287,9 +287,8 @@ public class Game extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        levels.writeFile();
-        levels.readFile();
-        layout = new Layout(levels.getLevels(), 1);
+        InitLevels.writeFile(InitLevels.levels);
+        layout = new Layout(InitLevels.readFile(), 1);
 
         initView();
         running = true;

@@ -1,18 +1,15 @@
 package org.example.sokoban;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  * Luokka luo olion lattialaatalle.
  */
-public class Floor extends Rectangle {
+public class Floor extends Component {
     /**
-     * Alustaa lattialaatan korkeuden, leveyden ja värin
+     * Alustaa lattialaatalle värin.
      */
     public Floor() {
-        setHeight(50);
-        setWidth(50);
         setFill(Color.WHITE);
     }
 }
