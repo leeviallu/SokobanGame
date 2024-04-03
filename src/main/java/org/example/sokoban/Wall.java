@@ -6,11 +6,13 @@ import javafx.scene.shape.Rectangle;
 /**
  * Luokka luo olion seinälle.
  */
-public class Wall extends Component {
+public class Wall extends Rectangle {
     /**
-     * Alustaa seinälle värin.
+     * Alustaa seinän korkeuden, leveyden ja värin
      */
     public Wall() {
+        setHeight(50);
+        setWidth(50);
         setFill(Color.BLACK);;
     }
 }

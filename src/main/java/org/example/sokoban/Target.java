@@ -6,11 +6,13 @@ import javafx.scene.shape.Rectangle;
 /**
  * Luokka luo olion kohdelaatalle.
  */
-public class Target extends Component {
+public class Target extends Rectangle {
     /**
-     * Alustaa laatalle värin.
+     * Alustaa laatan korkeuden, leveyden ja värin
      */
     public Target() {
+        setHeight(50);
+        setWidth(50);
         setFill(Color.LIGHTPINK);
     }
 }

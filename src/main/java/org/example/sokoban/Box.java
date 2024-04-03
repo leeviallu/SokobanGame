@@ -5,11 +5,26 @@ import javafx.scene.shape.Rectangle;
 /**
  * Luokka luo olion laatikolle.
  */
-public class Box extends Component {
+public class Box extends Rectangle {
     /**
-     * Alustaa laatikolle värin.
+     * Laatikon väri
+     */
+    private final Color color = Color.BURLYWOOD;
+    /**
+     * Laatikon korkeus
+     */
+    private final int height = 50;
+    /**
+     * Laatikon leveys
+     */
+    private final int width = 50;
+
+    /**
+     * Alustaja luokalle
      */
     public Box() {
-        setFill(Color.BURLYWOOD);
+        setHeight(height);
+        setWidth(width);
+        setFill(color);
     }
 }
