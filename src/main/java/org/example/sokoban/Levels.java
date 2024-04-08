@@ -91,7 +91,8 @@ public class Levels implements HandleFile {
         return levels;
     }
     /**
-     * Luetaan tasot tiedostosta
+     * Luetaan lista Level olioista tiedostosta levels.txt.
+     * Jos tiedoston lukemisessa tapahtuu virhe, liittyy se Level olion puuttumiseen tai tiedoston puuttumiseen.
      */
     public void readFile() {
         ObjectInputStream rFile = null;
@@ -113,7 +114,8 @@ public class Levels implements HandleFile {
         }
     }
     /**
-     * Kirjoitetaan tiedostoon tasot
+     * Kirjoitetaan Level olioiden lista tiedostoon levels.txt
+     * Jos tiedoston kirjoittamisessa tapahtuu virhe, liittyy se todennäköisesti siihen, että kirjoitettavaa tiedostoa ei ole.
      */
     public void writeFile() {
         ObjectOutputStream wFile = null;
