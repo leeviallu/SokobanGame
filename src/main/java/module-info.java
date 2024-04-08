@@ -1,3 +1,6 @@
+/**
+ * Moduulivaatimukset
+ */
 module org.example.sokoban {
     requires javafx.controls;
     requires javafx.fxml;

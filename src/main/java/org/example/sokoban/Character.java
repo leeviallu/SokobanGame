@@ -1,10 +1,5 @@
 package org.example.sokoban;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
 /**
  * Luokka luo olion pelihahmolle.
  */
@@ -18,7 +13,7 @@ public class Character extends ImageComponent {
      */
     private int posY;
     /**
-     * Alustaa hahmon säteen ja värin
+     * Alustaa olion tiedostopolun avulla
      */
     public Character() {
         super("file:src/main/resources/character.png");

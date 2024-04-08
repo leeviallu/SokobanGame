@@ -99,6 +99,11 @@ public class Game extends Application {
     private int charPosY;
 
     /**
+     * Luokan oletusalustaja
+     */
+    public Game() {}
+
+    /**
      * Metodi selvittää, eihän tietyssä kohdassa ole seinää
      * @param x sijainti x-akselilla
      * @param y sijainti y-akselilla
