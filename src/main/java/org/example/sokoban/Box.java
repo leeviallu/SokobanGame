@@ -6,8 +6,8 @@ import javafx.scene.image.ImageView;
 /**
  * Luokka luo olion laatikolle.
  */
-public class Box extends ImageView {
+public class Box extends ImageComponent {
     public Box() {
-        setImage(new Image("file:src/main/resources/box.png"));
+        super("file:src/main/resources/box.png");
     }
 }

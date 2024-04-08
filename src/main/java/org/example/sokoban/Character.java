@@ -1,12 +1,14 @@
 package org.example.sokoban;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
  * Luokka luo olion pelihahmolle.
  */
-public class Character extends Circle {
+public class Character extends ImageComponent {
     /**
      * Hahmon sijainti x-akselilla
      */
@@ -15,13 +17,11 @@ public class Character extends Circle {
      * Hahmon sijainti y-akselilla
      */
     private int posY;
-
     /**
      * Alustaa hahmon säteen ja värin
      */
     public Character() {
-        setRadius(25);
-        setFill(Color.YELLOW);;
+        super("file:src/main/resources/character.png");
     }
     /**
      * Asettaa hahmolle uuden sijainnin x-akselilla

@@ -6,8 +6,8 @@ import javafx.scene.image.ImageView;
 /**
  * Luokka luo olion kohdelaatalle.
  */
-public class Target extends ImageView {
+public class Target extends ImageComponent {
     public Target() {
-        setImage(new Image("file:src/main/resources/target.png"));
+        super("file:src/main/resources/target.png");
     }
 }

@@ -8,8 +8,8 @@ import javafx.scene.shape.Rectangle;
 /**
  * Luokka luo olion seinälle.
  */
-public class Wall extends ImageView {
+public class Wall extends ImageComponent {
     public Wall() {
-        setImage(new Image("file:src/main/resources/wall.png"));
+        super("file:src/main/resources/wall.png");
     }
 }
